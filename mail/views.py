@@ -32,6 +32,7 @@ def compose(request):
     # Check recipient emails
     data = json.loads(request.body)
     emails = [email.strip() for email in data.get("recipients").split(",")]
+    print(emails)
     if emails == [""]:
         return JsonResponse({
             "error": "At least one recipient required."
