@@ -15,6 +15,7 @@ function compose_email() {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#email-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
 
   const recipients = document.querySelector('#compose-recipients');
@@ -63,6 +64,7 @@ function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#email-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name
@@ -91,4 +93,21 @@ function load_mailbox(mailbox) {
 
    }
  });
+}
+
+
+function load_email(emailid){
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#email-view').style.display = 'block';
+  document.querySelector('#compose-view').style.display = 'none';
+
+  fetch(`/emails/${emailid}`)
+.then(response => response.json())
+.then(email => {
+    // Print email
+    console.log(email);
+    if "error"
+
+    // ... do something else with email ...
+});
 }
