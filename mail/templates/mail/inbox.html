@@ -16,6 +16,7 @@
 
 <div id="compose-view">
     <h3>New Email</h3>
+    <div id="error-message" style="color: red;"></div>
     <form id="compose-form">
         <div class="form-group">
             From: <input disabled class="form-control" value="{{ request.user.email }}">
@@ -32,7 +33,6 @@
 </div>
 
 <div id="email-view">
-
 </div>
 
 {% endblock %}

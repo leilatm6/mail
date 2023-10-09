@@ -77,6 +77,8 @@ def compose(request):
 def mailbox(request, mailbox):
 
     # Filter emails returned based on mailbox
+
+    # Email.objects.all().delete()
     if mailbox == "inbox":
         emails = Email.objects.filter(
             user=request.user, recipients=request.user, archived=False
