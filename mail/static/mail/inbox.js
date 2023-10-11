@@ -14,10 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
     load_mailbox('archive');
     //history.pushState({ view: 'archive' }, '', '/archive');
   });
+
   document.querySelector('#compose').addEventListener('click', ()=> {
     compose_email(null);
    // history.pushState({ view: 'compose' }, '', '/compose');
   });
+  document.querySelector('#compose-form').addEventListener('submit', submitformfunc);
 
   /*window.addEventListener('popstate', (event) => {
     console.log(window.history.length);
@@ -80,68 +82,7 @@ function compose_email(email) {
     subject.value = email.subject.startsWith("Re: ") ? email.subject : "Re: " + email.subject;
     body.value = "\nOn " + email.timestamp + " " + email.sender + " wrote: " + email.body  
   }
- 
 
-  
-  const composeForm = document.querySelector('#compose-form');
-  function handleFormSubmit(event) {
-    console.log('handleFormSubmit')
-    console.log(event)
-    event.preventDefault();
-    if (!recipients.value.includes('@')) {
-      recipients.value = '';
-      recipients.placeholder = "Please Enter Valid Recipients";
-      console.log('error');
-      return false;
-    }
-    fetch('/emails', {
-      method: 'POST',
-      body: JSON.stringify({
-        recipients: recipients.value,
-        subject: subject.value,
-        body: body.value
-      })
-    })
-    .then(response => {
-      console.log('Request sent');
-      if (!response.ok) {
-        console.log('Response not ok');
-        let error_message = 'Network response was not ok'; 
-        return response.json()
-          .then(data => {
-            if (data.error) {
-              error_message = data.error;
-            }
-            throw new Error(error_message);
-          });
-      }
-      return response.json();
-    })
-    .then(result => {
-      console.log('Response received:', result);
-      const successMessage = document.getElementById("success-message");
-      successMessage.classList = 'show-success';
-      document.querySelector('#compose-view').classList.add("fade-out");
-      composeForm.removeEventListener('submit', handleFormSubmit);
-      setTimeout(() => {
-        document.querySelector('#compose-view').classList.remove("fade-out")
-        successMessage.classList='hidden';
-        load_mailbox('inbox');    
-          }, 1000); 
-          
-        })
-    .catch(error => {
-      console.log(error);
-      const errorMessage=document.getElementById('error-message')
-      errorMessage.classList = 'show-success';
-      errorMessage.textContent = error.message;
-    });
-
-
-  }
-
-  // Add the event listener with the named function
-  composeForm.addEventListener('submit', handleFormSubmit);
 }
 
 
@@ -303,6 +244,64 @@ if (mailbox !== 'sent') {
 
 
 emailView.appendChild(emailContainer);
+}
+
+function submitformfunc(event) {
+  console.log('dgsdgfd')
+  event.preventDefault(); 
+  const recipients = document.querySelector('#compose-recipients');
+  const subject = document.querySelector('#compose-subject');
+  const body = document.querySelector('#compose-body');
+  
+  if (!recipients.value.includes('@')) {
+    recipients.value = '';
+    recipients.placeholder = "Please Enter Valid Recipients";
+    console.log('error');
+    return false;
+  }
+
+  fetch('/emails', {
+    method: 'POST',
+    body: JSON.stringify({
+      recipients: recipients.value,
+      subject: subject.value,
+      body: body.value
+    })
+  })
+  .then(response => {
+    console.log('Request sent');
+    if (!response.ok) {
+      console.log('Response not ok');
+      let error_message = 'Network response was not ok'; 
+      return response.json()
+        .then(data => {
+          if (data.error) {
+            error_message = data.error;
+          }
+          throw new Error(error_message);
+        });
+    }
+    return response.json();
+  })
+  .then(result => {
+    console.log('Response received:', result);
+    const successMessage = document.getElementById("success-message");
+    successMessage.classList = 'show-success';
+    document.querySelector('#compose-view').classList.add("fade-out");
+    setTimeout(() => {
+      document.querySelector('#compose-view').classList.remove("fade-out")
+      successMessage.classList='hidden';
+      load_mailbox('inbox');    
+        }, 1000); 
+        
+      })
+  .catch(error => {
+    console.log(error);
+    const errorMessage=document.getElementById('error-message')
+    errorMessage.classList = 'show-success';
+    errorMessage.textContent = error.message;
+  });
+
 }
 
 
