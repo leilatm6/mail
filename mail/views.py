@@ -180,3 +180,10 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "mail/register.html")
+
+
+"""def check_authentication(request):
+    if request.user.is_authenticated:
+        return JsonResponse({"authenticated": True})
+    else:
+        return JsonResponse({"authenticated": False})"""

@@ -6,19 +6,19 @@ textarea {
     display: flex;
     flex-wrap: wrap;
     align-items: center; /* Align items vertically in the middle */
-    align-content: center;
+   
     justify-content: space-between; /* Add space between flex items */
 }
 
 .mailbox-sender {
     flex: 2;
     /* font-weight: bold; */
-    text-align: center;
+    text-align: left;
 }
 
 .mailbox-subject {
     flex: 2;
-    text-align: center;
+    text-align: left;
 }
 
 .mailbox-timestamp {
@@ -32,7 +32,7 @@ textarea {
 }
 
 .mailbox-item.read {
-    background-color: lightgray;
+    background-color:  rgb(240, 240, 240);
 }
 
 
@@ -90,3 +90,47 @@ textarea {
     background-color: #ccc; /* Change the background color on hover */
 }
 
+.show-success {
+    display: block;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.fade-out {
+    /*pointer-events: none;*/
+    animation-name: fadeOut;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    
+  }
+
+  .fade-in {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    
+  }
+
+  li{
+    cursor: pointer;
+  }
