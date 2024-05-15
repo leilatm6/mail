@@ -24,6 +24,7 @@ PUT /emails/<email_id>: Update the status of an email.
 
 Technologies Used
 Django
+Python
 JavaScript
 HTML
 CSS
